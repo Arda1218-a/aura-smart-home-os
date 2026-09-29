@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Smart Home OS - Oda Bazlı Detaylı Kontrol & Yapı Mimarisi</title>
+    <meta name="description" content="Mutfak, Yatak Odası, Banyo/Tuvalet, Çalışma Odası, Salon, Koridor ve Sunucu Odası Detaylı Cihaz & Otonomi Kataloğu.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .info-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .room-matrix-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.88rem; }
+        .room-matrix-table th, .room-matrix-table td { padding: 14px 16px; border: 1px solid var(--border-color); text-align: left; }
+        .room-matrix-table th { background: rgba(15, 23, 42, 0.9); color: var(--cyan); font-weight: 600; }
+        .room-matrix-table tr:nth-child(even) { background: rgba(0, 0, 0, 0.2); }
+        .back-nav { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan); text-decoration: none; font-weight: 600; margin-bottom: 20px; }
+        .back-nav:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="info-container">
+        <a href="index.html" class="back-nav"><i data-lucide="arrow-left"></i> Ana Akıllı Ev Dashboard'una Dön</a>
+
+        <div class="academic-header">
+            <span class="university-tag">AURA OS v5 - DETAYLI ODA KONTROL MERKEZİ & YAPI MATRİSİ</span>
+            <h2>Her Oda İçin Cihazlar, Sensörler ve Otonomi Kataloğu</h2>
+            <p>Müstakil Ev ve Apartman Dairesi Mimarilerine Göre Odalarda Yapılabilecek Tüm Kontroller</p>
+        </div>
+
+        <!-- Room Detail Cards Grid -->
+        <div class="rooms-grid margin-top">
+            <!-- 1. MUTFAK -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap kitchen"><i data-lucide="utensils"></i></div>
+                    <div>
+                        <h3>1. Mutfak (Kitchen Hub)</h3>
+                        <span class="subtext">Pişirme, Güvenlik & İçme Suyu</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="tv-2"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Akıllı Fırın (200°C Pre-heat), Bulaşık Makinesi, Buzdolabı (4°C / -18°C), Kahve Makinesi (Espresso/Filtre).</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="glass-water"></i>
+                        <div>
+                            <strong>İçme Suyu & Güvenlik:</strong>
+                            <p>Akıllı İçme Suyu Sebili (Haşlanma Korumalı 75°C İdeal Sıcak / 6°C Soğuk), Duman/Gaz Dedektörü (MQ-135), NILM AI Akım İzleme.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. YATAK ODASI -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap bedroom"><i data-lucide="bed"></i></div>
+                    <div>
+                        <h3>2. Yatak Odası (Master Bedroom)</h3>
+                        <span class="subtext">Sirkadiyen Biyoritim & Uyku Konforu</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="sun"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Motorlu Kademeli Perdeler (%10-%100), Sirkadiyen Biyoritim Aydınlatma, Akıllı Yatak Kalite Sensörü.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="thermometer"></i>
+                        <div>
+                            <strong>İklimlendirme:</strong>
+                            <p>3'lü Karma Isıtma (Alttan Isıtma + Inverter Klima 25°C Eko + Kalorifer Petek Kontrolü).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. BANYO & TUVALET -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap bathroom"><i data-lucide="bath"></i></div>
+                    <div>
+                        <h3>3. Banyo & Tuvalet (Sanitary Hub)</h3>
+                        <span class="subtext">FMCW Radar (Düşme Tespiti) & Buğu Önleme</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="radio"></i>
+                        <div>
+                            <strong>Gizlilik Odaklı Sensörler:</strong>
+                            <p>60GHz FMCW Milimetrik Dalga Radarı (Kamerasız düşme ve nabız takibi), Ayna Buğu Rezistansı, Nem Tahliye Fanı.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i data-lucide="droplet"></i>
+                        <div>
+                            <strong>Su Tesisatı:</strong>
+                            <p>Klozet rezervuarlarına arıtılmış gri su beslemesi, kaçak önleme selenoid vanası.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ÇALIŞMA ODASI -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap livingroom"><i data-lucide="briefcase"></i></div>
+                    <div>
+                        <h3>4. Çalışma Odası (Study / Office)</h3>
+                        <span class="subtext">Ergonomik Odaklanma & Hava Kalitesi</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="lamp"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Odaklanma Aydınlatması (6000K Beyaz Işık), Akıllı Masa Varlık Sensörü, HEPA Hava Temizleme Cihazı.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. SALON -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap livingroom"><i data-lucide="tv"></i></div>
+                    <div>
+                        <h3>5. Salon (Living Room)</h3>
+                        <span class="subtext">Eğlence & Ortam Senaryoları</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="sparkles"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Akıllı Robot Süpürge (Şarj & Temizlik), Sinema/TV Işık Dimleme, Akıllı Projeksiyon & Ses Sistemi, CO2 Hava Sirkülasyonu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. KORİDOR & ANTRE -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap hallway"><i data-lucide="footprints"></i></div>
+                    <div>
+                        <h3>6. Koridor & Antre (Entrance)</h3>
+                        <span class="subtext">Gece Rehberliği & Giriş Güvenliği</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="shield"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Gece Adım Rehber LED'leri (%5 Parlaklık), Motorlu Akıllı Dış Kapı Kilidi, PIR Hareket Sensörleri, Karşılama Hoparlörü.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. SUNUCU ODASI -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap server"><i data-lucide="server"></i></div>
+                    <div>
+                        <h3>7. Ev Sunucu Odası (Edge Hub)</h3>
+                        <span class="subtext">Zero-Cloud Yerel AI & Veri Deposu</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="cpu"></i>
+                        <div>
+                            <strong>Sunucu Donanımı:</strong>
+                            <p>On-Premise Mini PC (Linux Edge OS), Yerel LLM (Llama-3), InfluxDB Zaman Serisi DB, Kesintisiz Güç Kaynağı (UPS).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. BALKON & TERAS -->
+            <div class="room-detail-card">
+                <div class="room-card-header">
+                    <div class="icon-wrap balcony"><i data-lucide="sun-medium"></i></div>
+                    <div>
+                        <h3>8. Balkon & Teras (Outdoor)</h3>
+                        <span class="subtext">Hava Durumu Otonomisi & Sulama</span>
+                    </div>
+                </div>
+                <div class="room-features">
+                    <div class="feature-item">
+                        <i data-lucide="cloud-rain"></i>
+                        <div>
+                            <strong>Kontrol Edilen Cihazlar:</strong>
+                            <p>Otomatik Yağmur/Rüzgar Tenteleri, Toprak Nem Sensörlü Akıllı Damla Sulama Sistemi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÜSTAKİL EV VS APARTMAN DAİRESİ MATRİSİ -->
+        <div class="card margin-top">
+            <div class="card-header">
+                <h3><i data-lucide="building"></i> Yapı Tipi Karşılaştırma Matrisi (Müstakil Ev vs Apartman Dairesi)</h3>
+            </div>
+            <table class="room-matrix-table">
+                <thead>
+                    <tr>
+                        <th>Özellik / Alan</th>
+                        <th>Müstakil Ev (Detached Villa)</th>
+                        <th>Apartman Dairesi (Apartment Unit)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Su Arıtma Sistemi</strong></td>
+                        <td>4-Tanklı BiyoKalp Biyomimetik Sistem (T1, T2, T3, T4 - 2000L Toplam)</td>
+                        <td>Dikey Çift Kanallı Şaft Sistemi (Kompakt 300L)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mutfak Su Sebili</strong></td>
+                        <td>RO Filtreli Alkalin Sebil (88°C Sıcak / 6°C Soğuk)</td>
+                        <td>RO Filtreli Alkalin Sebil (88°C Sıcak / 6°C Soğuk)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Isı Geri Kazanımı</strong></td>
+                        <td>Çatı Güneşi + Bulaşık Makinesi Plakalı Isı Eşanjörü</td>
+                        <td>Bulaşık Makinesi Plakalı Isı Eşanjörü</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yedek Güç</strong></td>
+                        <td>Çatı Güneş Paneli + Lityum Akü Bankası</td>
+                        <td>Sunucu Odası Kesintisiz Güç Kaynağı (UPS)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Smart Home OS - NVIDIA NIM & NeMo Guardrails Entegre</title>
+    <meta name="description" content="NVIDIA NIM, NeMo Guardrails, NILM AI, BiyoKalp Su Dönüşümü ve Beyaz Eşya Kontrolü.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons & Chart.js -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i data-lucide="cpu"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>AURA <span>OS v5.2</span></h2>
+                    <span class="badge-academic">NVIDIA NIM & LIVE WEATHER</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="floorplan">
+                    <i data-lucide="map"></i>
+                    <span>Kat Planı & Mobil Telefon</span>
+                </button>
+                <button class="nav-item" data-tab="appliances">
+                    <i data-lucide="tv-2"></i>
+                    <span>Beyaz Eşya Kataloğu</span>
+                </button>
+                <button class="nav-item" data-tab="water-dispenser">
+                    <i data-lucide="glass-water"></i>
+                    <span>BiyoKalp Su & Emniyetli Sebil</span>
+                </button>
+                <button class="nav-item" data-tab="innovations">
+                    <i data-lucide="sparkles"></i>
+                    <span>3 Devrimsel İnovasyon</span>
+                </button>
+                <button class="nav-item" data-tab="ai-advisor">
+                    <i data-lucide="bot"></i>
+                    <span>NVIDIA NIM AI Asistanı</span>
+                </button>
+                <button class="nav-item" data-tab="academic">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>MIT Raporu & Faz Haritası</span>
+                </button>
+                <button class="nav-item" data-tab="upcoming">
+                    <i data-lucide="clock-alert"></i>
+                    <span>Yakında Eklenecekler</span>
+                </button>
+            </nav>
+
+            <!-- Quick Ambient Control Widget -->
+            <div class="music-player-widget">
+                <div class="widget-header">
+                    <i data-lucide="music" class="purple"></i>
+                    <span class="widget-title">Akıllı Müzik (Web Audio Synth)</span>
+                </div>
+                <div class="track-info">
+                    <span id="current-track" class="track-name">Lofi Ambient Chill (Synth)</span>
+                    <span class="track-artist">AURA Web-Audio Engine</span>
+                </div>
+                <div class="player-controls">
+                    <button class="btn-icon" id="btn-prev-track"><i data-lucide="skip-back"></i></button>
+                    <button class="btn-icon primary" id="btn-toggle-music"><i data-lucide="play" id="music-icon"></i></button>
+                    <button class="btn-icon" id="btn-next-track"><i data-lucide="skip-forward"></i></button>
+                </div>
+            </div>
+
+            <!-- Server Telemetry Card with NVIDIA Status -->
+            <div class="server-status-card">
+                <div class="status-header">
+                    <span class="status-dot online"></span>
+                    <span class="status-title">NVIDIA NIM Edge Sunucu</span>
+                </div>
+                <div class="status-metrics">
+                    <div class="metric">
+                        <span class="label">NVIDIA NIM:</span>
+                        <span class="value emerald">CANLI BAĞLI (Live)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">NeMo Guardrails:</span>
+                        <span class="value cyan">🛡️ KORUMA AKTİF</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Gecikme:</span>
+                        <span class="value purple" id="server-latency">0.8 ms</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="page-title">Kuşbakışı Kat Planı & Mobil Telefon Simülatörü</h1>
+                    <p class="subtitle">NVIDIA NIM Yapay Zekası, NeMo Guardrails Güvenliği ve NILM Akım Analizi</p>
+                </div>
+
+                <div class="header-actions">
+                    <!-- Live Weather Badge (Open-Meteo) -->
+                    <div class="weather-badge" id="weather-badge" title="Open-Meteo Canlı Dış Ortam Verisi">
+                        <i data-lucide="cloud-sun" class="amber"></i>
+                        <span id="live-weather-text">Dış Hava: 27°C | Nem: %56</span>
+                    </div>
+
+                    <a href="info.html" class="btn btn-outline" style="text-decoration: none;">
+                        <i data-lucide="info"></i> Oda Rehberi (info.html)
+                    </a>
+                    <div class="quick-sim-buttons">
+                        <button class="btn btn-primary" id="btn-welcome-home">
+                            <i data-lucide="home"></i> "Eve Geldim" Karşılama
+                        </button>
+                        <button class="btn btn-emerald" id="btn-target-25">
+                            <i data-lucide="thermometer"></i> 25°C İklim Modu
+                        </button>
+                    </div>
+                    <div class="clock-display" id="live-clock">12:35:07</div>
+                </div>
+            </header>
+
+            <!-- =================================================================== -->
+            <!-- TAB 1: KUŞBAKIŞI KAT PLANI & MOBİL SİMÜLATÖR -->
+            <!-- =================================================================== -->
+            <section class="tab-content active" id="tab-floorplan">
+                <!-- Key Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i data-lucide="cpu"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">NVIDIA NIM AI</span>
+                            <span class="stat-value emerald">Llama-3.2 Vision</span>
+                            <span class="stat-desc">Canlı API & NeMo Güvenlik</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon cyan"><i data-lucide="flame"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Isı Eşanjörü</span>
+                            <span class="stat-value">+12% Isı Kazanıldı</span>
+                            <span class="stat-desc">Antigravity AI İnovasyonu</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon emerald"><i data-lucide="glass-water"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Haşlanma Emniyetli Sebil</span>
+                            <span class="stat-value">75°C İdeal / 6°C Soğuk</span>
+                            <span class="stat-desc">Termos Kupa Algılamalı</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i data-lucide="zap"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">NILM AI Akım</span>
+                            <span class="stat-value" id="stat-power-draw">1.42 kW</span>
+                            <span class="stat-desc">Panodan Tek Sensör</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Split View: Blueprint + Smartphone Simulator -->
+                <div class="dashboard-split">
+                    <!-- Floorplan -->
+                    <div class="card floorplan-image-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="compass"></i> Mimari Kat Planı (Zirve Görsel İkiz)</h3>
+                            <span class="card-badge cyan">Canlı Senkronize</span>
+                        </div>
+                        
+                        <div class="floorplan-image-wrapper">
+                            <img src="smart_home_floorplan.jpg" alt="Smart Home Blueprint" class="floorplan-img">
+                            
+                            <!-- Interactive Pins -->
+                            <div class="map-pin bedroom" style="top: 28%; left: 18%;" data-room="bedroom">
+                                <span class="pin-pulse"></span>
+                                <div class="pin-tooltip">Yatak Odası: 21.5°C | Kapı: Kapalı</div>
+                            </div>
+                            <div class="map-pin kitchen" style="top: 28%; left: 62%;" data-room="kitchen">
+                                <span class="pin-pulse" id="pin-kitchen-pulse"></span>
+                                <div class="pin-tooltip" id="tooltip-kitchen">Mutfak: NVIDIA Vision Tespiti | Akıllı Sebil Hazır</div>
+                            </div>
+                            <div class="map-pin bathroom" style="top: 48%; left: 18%;" data-room="bathroom">
+                                <span class="pin-pulse"></span>
+                                <div class="pin-tooltip">Banyo: FMCW Radar Aktif</div>
+                            </div>
+                            <div class="map-pin livingroom" style="top: 60%; left: 62%;" data-room="livingroom">
+                                <span class="pin-pulse"></span>
+                                <div class="pin-tooltip">Salon: Robot Süpürge Şarjda | 23.0°C</div>
+                            </div>
+                            <div class="map-pin hallway" style="top: 45%; left: 35%;" data-room="hallway">
+                                <span class="pin-pulse warning" id="pin-hallway-pulse"></span>
+                                <div class="pin-tooltip">Koridor: Hareket Sensörü</div>
+                            </div>
+                            <div class="map-pin server" style="top: 28%; left: 82%;" data-room="server">
+                                <span class="pin-pulse purple"></span>
+                                <div class="pin-tooltip">Sunucu Odası: NVIDIA NIM Edge Node</div>
+                            </div>
+                            <div class="map-pin water" style="top: 65%; left: 82%;" data-room="water">
+                                <span class="pin-pulse emerald"></span>
+                                <div class="pin-tooltip">BiyoKalp 4-Tank Su Arıtma Ünitesi</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LIVE MOBILE PHONE SIMULATOR FRAME -->
+                    <div class="card phone-simulator-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="smartphone"></i> Mobil Telefon Uygulaması Demo</h3>
+                            <span class="card-badge emerald">Canlı Senkronize</span>
+                        </div>
+
+                        <div class="smartphone-frame">
+                            <div class="phone-notch">
+                                <div class="camera-dot"></div>
+                                <div class="speaker-bar"></div>
+                            </div>
+
+                            <div class="phone-screen">
+                                <div class="phone-top-bar">
+                                    <span>12:35</span>
+                                    <span class="app-title">AURA Mobile App</span>
+                                    <i data-lucide="wifi" class="cyan"></i>
+                                </div>
+
+                                <div class="phone-nav-tabs">
+                                    <button class="phone-tab-btn active" data-ptab="p-appliances">Eşyalar</button>
+                                    <button class="phone-tab-btn" data-ptab="p-water">Sebil</button>
+                                    <button class="phone-tab-btn" data-ptab="p-doors">Kapılar</button>
+                                </div>
+
+                                <!-- Phone Tab 1: Eşyalar -->
+                                <div class="phone-tab-body active" id="p-appliances">
+                                    <div class="phone-widget-card">
+                                        <div class="widget-row">
+                                            <span><i data-lucide="flame" class="amber"></i> Akıllı Fırın</span>
+                                            <span class="status-tag" id="phone-oven-tag">KAPALI</span>
+                                        </div>
+                                        <div class="widget-action">
+                                            <button class="btn btn-sm btn-primary" id="btn-phone-toggle-oven">Fırın Ön Isıtma (200°C)</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="phone-widget-card margin-top-sm">
+                                        <div class="widget-row">
+                                            <span><i data-lucide="washing-machine" class="cyan"></i> Çamaşır Makinesi</span>
+                                            <span class="status-tag success" id="phone-wash-tag">HAZIR</span>
+                                        </div>
+                                        <div class="widget-action">
+                                            <button class="btn btn-sm btn-outline" id="btn-phone-toggle-wash">Hızlı Yıkama</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="phone-widget-card margin-top-sm">
+                                        <div class="widget-row">
+                                            <span><i data-lucide="cup-soda" class="purple"></i> Kahve Makinesi</span>
+                                            <button class="btn btn-sm btn-emerald" id="btn-phone-coffee">Espresso Yap</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="phone-widget-card margin-top-sm">
+                                        <div class="widget-row">
+                                            <span><i data-lucide="bot" class="cyan"></i> Robot Süpürge</span>
+                                            <button class="btn btn-sm btn-outline" id="btn-phone-vacuum">Temizlik Başlat</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Tab 2: Sebil -->
+                                <div class="phone-tab-body" id="p-water">
+                                    <div class="phone-widget-card">
+                                        <div class="widget-row">
+                                            <span><i data-lucide="glass-water" class="emerald"></i> Akıllı Sebil</span>
+                                            <strong class="emerald">12L Hazır</strong>
+                                        </div>
+                                        <div class="water-metrics-mini">
+                                            <span>Sıcaklık: <strong>75°C İdeal İçim</strong></span>
+                                            <span>Emniyet: <strong>Termos Sensörü Aktif</strong></span>
+                                        </div>
+                                        <div class="widget-action margin-top-sm">
+                                            <button class="btn btn-sm btn-emerald" id="btn-phone-dispense">Soğuk Su (6°C)</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Tab 3: Kapılar -->
+                                <div class="phone-tab-body" id="p-doors">
+                                    <div class="phone-widget-card">
+                                        <div class="widget-row">
+                                            <span>Tüm Kapıları Kilitle</span>
+                                            <button class="btn btn-sm btn-warning" id="btn-phone-lock-all">Kilitle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 2: BEYAZ EŞYA KATALOĞU (TÜM CİHAZLAR) -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-appliances">
+                <div class="section-intro">
+                    <h2>Genişletilmiş Akıllı Beyaz Eşya Kataloğu</h2>
+                    <p>Samsung SmartThings, LG ThinQ ve Vestel Open-API ile bağlanan tüm akıllı ev eşyaları.</p>
+                </div>
+
+                <div class="dashboard-split">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="tv-2"></i> Bağlı Beyaz Eşyaların Anlık Durumu</h3>
+                        </div>
+
+                        <div class="appliance-detail-list">
+                            <!-- 1. Fırın -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="flame" class="amber"></i>
+                                    <div>
+                                        <strong>Mutfak Fırını (Vestel Open-API):</strong>
+                                        <p id="main-oven-desc">Durum: Beklemede. NILM sensörü panodan akımı izliyor.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" id="btn-main-toggle-oven">Tetikle (200°C)</button>
+                            </div>
+
+                            <!-- 2. Bulaşık Makinesi -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="washing-machine" class="cyan"></i>
+                                    <div>
+                                        <strong>Bulaşık Makinesi (Samsung SmartThings):</strong>
+                                        <p id="main-dish-desc">Durum: Eko Yıkama Hazır. Yıkama bitince 55°C su eşanjörden geçecek.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" id="btn-main-toggle-dish">Yıkama Başlat</button>
+                            </div>
+
+                            <!-- 3. Çamaşır Makinesi -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="shirt" class="purple"></i>
+                                    <div>
+                                        <strong>Akıllı Çamaşır Makinesi (LG ThinQ):</strong>
+                                        <p id="main-wash-desc">Durum: Eko Yıkama Hazır (1400 Devir). Yarı-gri su T2 tankına akar.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" id="btn-main-toggle-wash">Yıkama Başlat</button>
+                            </div>
+
+                            <!-- 4. Kurutma Makinesi -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="wind" class="emerald"></i>
+                                    <div>
+                                        <strong>Akıllı Kurutma Makinesi (Isı Pompası):</strong>
+                                        <p id="main-dryer-desc">Durum: Beklemede. Isı pompalı düşük enerji modu aktif.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" id="btn-main-toggle-dryer">Kurutma Başlat</button>
+                            </div>
+
+                            <!-- 5. Kahve Makinesi -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="cup-soda" class="amber"></i>
+                                    <div>
+                                        <strong>Akıllı Kahve Makinesi (Espresso/Filtre):</strong>
+                                        <p id="main-coffee-desc">Durum: Su Sıcaklığı Hazır. Taze kahve çekirdeği dolu.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-emerald" id="btn-main-make-coffee">Espresso Yap</button>
+                            </div>
+
+                            <!-- 6. Robot Süpürge -->
+                            <div class="appliance-row">
+                                <div class="appliance-info">
+                                    <i data-lucide="bot" class="cyan"></i>
+                                    <div>
+                                        <strong>Akıllı Robot Süpürge (LiDAR Haritalı):</strong>
+                                        <p id="main-vacuum-desc">Durum: Şarj İstasyonunda (%100 Dolu). Otonom harita hazır.</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" id="btn-main-start-vacuum">Temizlik Başlat</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="shield"></i> Cihaz Güvenliği & Otonomi</h3>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Tüm cihazlar panodaki NILM AI akım sensörü, Vocal Guard sesli güvenlik sistemi ve NVIDIA NeMo Guardrails tarafından denetlenmektedir.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 3: BİYOKALP SU & HAŞLANMA EMNİYETLİ SEBİL -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-water-dispenser">
+                <div class="section-intro">
+                    <h2>BiyoKalp Su Arıtma & Haşlanma Emniyetli Akıllı Sebil</h2>
+                    <p>88°C aşırı sıcak su tehlikesine karşı **75°C İdeal İçim Sıcaklığı** ve **Termos Kupa Algılama Emniyet Sensörü** ile yenilenmiş sebil.</p>
+                </div>
+
+                <!-- Building Mode Selector -->
+                <div class="building-mode-selector margin-bottom">
+                    <button class="btn btn-outline active" id="btn-mode-detached">
+                        <i data-lucide="home"></i> Müstakil Ev (4-Tanklı BiyoKalp)
+                    </button>
+                    <button class="btn btn-outline" id="btn-mode-apartment">
+                        <i data-lucide="building"></i> Apartman Dairesi (Dikey Şaft)
+                    </button>
+                </div>
+
+                <div class="dashboard-split">
+                    <!-- Smart Water Dispenser Unit Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="glass-water"></i> Mutfak Akıllı İçme Suyu Sebili</h3>
+                            <span class="card-badge emerald">Termos Kupa Sensörlü (Emniyetli)</span>
+                        </div>
+
+                        <div class="dispenser-metrics-grid">
+                            <div class="dispenser-metric-box">
+                                <span class="label">Temiz İçme Suyu Deposu</span>
+                                <span class="val emerald">12 Litre (Dolu)</span>
+                            </div>
+                            <div class="dispenser-metric-box">
+                                <span class="label">Su Saflık Değeri (TDS)</span>
+                                <span class="val cyan">14 ppm (Mükemmel)</span>
+                            </div>
+                            <div class="dispenser-metric-box">
+                                <span class="label">Haşlanma Emniyeti</span>
+                                <span class="val emerald" id="scald-safety-status">AKTİF (75°C İdeal İçim)</span>
+                            </div>
+                            <div class="dispenser-metric-box">
+                                <span class="label">Yapı Mimarisi</span>
+                                <span class="val emerald" id="dispenser-building-type">Müstakil Ev (BiyoKalp)</span>
+                            </div>
+                        </div>
+
+                        <div class="dispenser-controls margin-top">
+                            <h4>Sebilden Su İçme Seçenekleri:</h4>
+                            <div class="dispenser-btn-group">
+                                <button class="btn btn-emerald" id="btn-dispense-cold"><i data-lucide="droplet"></i> Soğuk Su (6°C Ferahlatıcı)</button>
+                                <button class="btn btn-outline" id="btn-dispense-warm"><i data-lucide="sun"></i> Ilık Su (38°C Vücut Sıcaklığı)</button>
+                                <button class="btn btn-warning" id="btn-dispense-hot"><i data-lucide="flame"></i> Sıcak Çay/Kahve (75°C Emniyetli)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BiyoKalp 4-Tank Overview -->
+                    <div class="card" id="biyokalp-details-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="layers"></i> BiyoKalp 4-Tank Arıtma Mimarisi</h3>
+                        </div>
+
+                        <div class="water-flow-steps">
+                            <div class="flow-step">
+                                <div class="step-num">T1</div>
+                                <div class="step-details">
+                                    <strong>Açık Gri Su Deposu (500L):</strong>
+                                    <p>Duş, küvet ve lavabodan gelen hafif kirli su toplanır.</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-num">T2</div>
+                                <div class="step-details">
+                                    <strong>Koyu Gri Su Deposu (400L):</strong>
+                                    <p>Çamaşır ve bulaşık makinesinden gelen deterjanlı su toplanır.</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-num">T3</div>
+                                <div class="step-details">
+                                    <strong>Karantina Deposu (200L):</strong>
+                                    <p>Şüpheli yıkama suları sensör risk analizine tabi tutulur.</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-num">T4</div>
+                                <div class="step-details">
+                                    <strong>Temiz Arıtılmış Su Deposu (900L):</strong>
+                                    <p>Rezervuara, bahçeye ve Mutfak Akıllı Sebiline aktarılır.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 4: 3 DEVRİMSEL İNOVASYON -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-innovations">
+                <div class="section-intro">
+                    <h2>Projeyi Zirveye Taşıyan 3 Devrimsel İnovasyon</h2>
+                    <p>Antigravity AI (Geliştirici Asistan) tarafından projeye özel olarak akıl edilmiş ve geliştirilmiş 3 temel inovasyon katmanı.</p>
+                </div>
+
+                <div class="innovations-detail-grid">
+                    <div class="card innovation-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="activity" class="purple"></i> 1. NILM AI (Tek Noktadan Akım Analizi)</h3>
+                            <span class="card-badge purple">Antigravity AI İnovasyonu</span>
+                        </div>
+                        <div class="innovation-body">
+                            <p><strong>Nedir & Nasıl Çalışır?</strong> Her prize pahalı akıllı priz takmak yerine, ana elektrik panosuna bağlanan **tek bir akım sensörü (CT Klempi)** tüm evin elektrik dalga boyunu ölçer. Yapay zeka, cihazları "elektrik parmak izinden" tanır.</p>
+                        </div>
+                    </div>
+
+                    <div class="card innovation-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="flame" class="cyan"></i> 2. Kapalı Devre Su-Isı Eşanjörü</h3>
+                            <span class="card-badge cyan">Antigravity AI İnovasyonu</span>
+                        </div>
+                        <div class="innovation-body">
+                            <p><strong>Nedir & Nasıl Çalışır?</strong> Bulaşık makinesinden çıkan 55°C sıcaklıktaki kirli su dökülmeden önce **plakalı ısı eşanjöründen** geçer. Sıcaklık, alttan ısıtma tesisatındaki soğuk suya aktarılır.</p>
+                        </div>
+                    </div>
+
+                    <div class="card innovation-card full-width">
+                        <div class="card-header">
+                            <h3><i data-lucide="shield-alert" class="rose"></i> 3. Vocal Guard (Sesli Acil Durum Protokolü)</h3>
+                            <span class="card-badge warning">Antigravity AI İnovasyonu</span>
+                        </div>
+                        <div class="innovation-body">
+                            <p><strong>Nedir & Nasıl Çalışır?</strong> Mutfak sensörü duman algıladığında hoparlörlerden sesli insan uyarısı verir: **"UYARI! Mutfak fırınında duman algılandı. Elektrik kesiliyor!"**. Aynı anda fırın elektriğini keser ve mutfak kapısını açar.</p>
+
+                            <div class="vocalguard-demo-box margin-top" id="vocalguard-box">
+                                <div class="vocalguard-status">
+                                    <i data-lucide="shield-check" class="emerald" id="vg-icon"></i>
+                                    <span id="vg-text">Vocal Guard Sistemi Beklemede. Güvenlik Normal.</span>
+                                </div>
+                                <button class="btn btn-warning" id="btn-test-vocalguard-action">
+                                    <i data-lucide="volume-2"></i> Sesli Acil Durum Simülasyonunu Çalıştır
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 5: NVIDIA NIM & YEREL AI ASİSTANI -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-ai-advisor">
+                <div class="section-intro">
+                    <h2>NVIDIA NIM & NeMo Guardrails Güçlü Yerel Sunucu AI</h2>
+                    <p>build.nvidia.com altyapısıyla canlı bağlı çalışan endüstriyel standartta yapay zeka asistanı.</p>
+                </div>
+
+                <!-- NVIDIA Telemetry Banner -->
+                <div class="card margin-bottom" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.05);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i data-lucide="cpu" class="emerald" style="font-size: 1.8rem;"></i>
+                            <div>
+                                <strong style="color: var(--text-main); font-size: 1.05rem;">NVIDIA Inference Microservices (NIM) Aktif</strong>
+                                <p style="font-size: 0.8rem; color: var(--text-muted);">Çalışan Model: <code>meta/llama-3.2-11b-vision-instruct</code> | Güvenlik: <code>NVIDIA NeMo Guardrails</code></p>
+                            </div>
+                        </div>
+                        <span class="card-badge emerald">API DURUMU: CANLI & BAĞLI</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-split">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="sparkles"></i> Akıllı Ev Sunucusu Önerileri</h3>
+                            <span class="card-badge purple">NVIDIA NIM Önerileri</span>
+                        </div>
+
+                        <div class="ai-recommendations-list" id="ai-recommendations">
+                            <div class="ai-recommend-card">
+                                <div class="icon emerald"><i data-lucide="shield-check"></i></div>
+                                <div class="content">
+                                    <strong>NVIDIA NeMo Guardrails:</strong>
+                                    <p>Tüm fiziksel cihaz komutları denetlendi. Halüsinasyon riski: %0.0. Güvenlik duvarı aktif.</p>
+                                </div>
+                            </div>
+                            <div class="ai-recommend-card">
+                                <div class="icon purple"><i data-lucide="activity"></i></div>
+                                <div class="content">
+                                    <strong>NILM AI Akım Tespiti:</strong>
+                                    <p>Panodaki tek sensör fırın ve çamaşır makinesi dalga boyunu algıladı.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="message-square"></i> NVIDIA Destekli Canlı Asistan Sohbeti</h3>
+                        </div>
+
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="chat-msg ai">
+                                    <span class="sender">AURA NVIDIA AI:</span>
+                                    <p>Merhaba! Ben NVIDIA NIM altyapısında çalışan AURA ev beyniyim. NeMo Guardrails koruması altındayım. Fırını, haşlanma emniyetli sebili veya iklimlendirmeyi yönetebilirim.</p>
+                                </div>
+                            </div>
+
+                            <div class="chat-input-row">
+                                <input type="text" id="chat-input" placeholder="Komut yazın (ör: 1 bardak çay suyu ver, fırını kontrol et)...">
+                                <button class="btn btn-primary" id="btn-send-chat"><i data-lucide="send"></i> Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 6: ACADEMIC REPORT & PHASES (FAZ 1 - FAZ 6 GELECEK VİZYONU) -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-academic">
+                <div class="academic-report-container">
+                    <div class="academic-header">
+                        <span class="university-tag">MIT MEDIA LAB & HARVARD SEAS ZİRVE EVALÜASYONU</span>
+                        <h2>GÜNCEL DURUM: %100 TAMAMLANDI (NVIDIA NIM DESTEKLİ ZİRVE SÜRÜM)</h2>
+                        <p>Fazlar Halinde Tüm Katmanlar (Faz 1 - Faz 5) Tamamlandı + Faz 6 Gelecek Vizyonu Eklendi</p>
+                    </div>
+
+                    <div class="phases-roadmap-grid">
+                        <div class="phase-card completed">
+                            <div class="phase-badge">FAZ 1 - %100</div>
+                            <h3>Kat Planı & Arayüz</h3>
+                            <p>Oda otonomisi, kuşbakışı kat planı, motorlu kapılar ve iklimlendirme.</p>
+                        </div>
+                        <div class="phase-card completed">
+                            <div class="phase-badge">FAZ 2 - %100</div>
+                            <h3>Matematik & Jüri Rehberi</h3>
+                            <p>Isı transferi (MPC), Oyun Teorisi pazarlığı ve kütle dengesi hesap notları.</p>
+                        </div>
+                        <div class="phase-card completed">
+                            <div class="phase-badge">FAZ 3 - %100</div>
+                            <h3>NVIDIA NIM Backend</h3>
+                            <p>Python MQTT backend (`server_backend.py`), NVIDIA NIM API ve NeMo Guardrails.</p>
+                        </div>
+                        <div class="phase-card completed">
+                            <div class="phase-badge">FAZ 4 - %100</div>
+                            <h3>Maket Ev & ESP32</h3>
+                            <p>500-1000 TL maket ev rehberi (`MAKET_EV_VE_DONANIM_REHBERI.md`) ve C++ donanım kodu.</p>
+                        </div>
+                        <div class="phase-card completed">
+                            <div class="phase-badge">FAZ 5 - %100</div>
+                            <h3>3 Devrimsel İnovasyon</h3>
+                            <p>NILM AI, Eşanjör ve Vocal Guard. <i>(Antigravity AI İnovasyonları)</i></p>
+                        </div>
+                        <!-- NEW FAZ 6: POST-MIT VISION -->
+                        <div class="phase-card post-mit-card">
+                            <div class="phase-badge purple">FAZ 6 - POST-MIT VİZYONU</div>
+                            <h3>MIT Kazanırsak Hedefler</h3>
+                            <p>1:1 Living Lab, Kuantum Kriptografi, 60GHz Biyometrik Radar ve Omniverse 3D CFD.</p>
+                        </div>
+                    </div>
+
+                    <!-- Post-MIT Detailed Vision Box -->
+                    <div class="card margin-top" style="border: 1px solid var(--purple); background: rgba(168, 85, 247, 0.06);">
+                        <div class="card-header">
+                            <h3><i data-lucide="rocket" class="purple"></i> FAZ 6: MIT Kazanılırsa Hayata Geçirilecek Büyük Hedefler (Living Lab)</h3>
+                            <span class="card-badge purple">Akademik Gelecek Vizyonu</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 12px;">
+                            <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <strong style="color: var(--cyan);"><i data-lucide="home"></i> 1. 1:1 MIT Living Lab Prototipi:</strong>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Karton/Akrilik maketten çıkıp MIT kampüsünde gerçek 1:1 ölçekli deneysel bir yaşam laboratuvarı kurmak.</p>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <strong style="color: var(--purple);"><i data-lucide="shield"></i> 2. Kuantum-Güvenlikli Mesh (PQC):</strong>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Kuantum bilgisayarların kıramayacağı Kyber/Dilithium algoritmalarıyla ev içi sensör şifrelemesi.</p>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <strong style="color: var(--emerald);"><i data-lucide="activity"></i> 3. 60GHz Biyometrik Radar Sağlık:</strong>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Kamerasız temassız mikrometre radar ile uyku apnesi, kalp ritmi ve stres seviyesi takibi.</p>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <strong style="color: var(--amber);"><i data-lucide="box"></i> 4. NVIDIA Omniverse 3D Dijital İkiz:</strong>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Evin termal hava akımını ve CFD dinamiklerini ray tracing ile 3 boyutlu simüle etmek.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =================================================================== -->
+            <!-- TAB 7: YAKINDA EKLENECEKLER (GELECEK GÜNCELLEME ÖZELLİKLERİ) -->
+            <!-- =================================================================== -->
+            <section class="tab-content" id="tab-upcoming">
+                <div class="section-intro">
+                    <h2>🚀 Yakında Eklenecek Özellikler (Gelecek Güncelleme Yol Haritası)</h2>
+                    <p>Sistemin bir sonraki sürümünde aktif edilecek, yaşam kalitesini ve hayati güvenliği artıran 2 yeni vizyoner özellik.</p>
+                </div>
+
+                <div class="innovations-detail-grid">
+                    <!-- Feature 1: Romantik Mod -->
+                    <div class="card innovation-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="heart" class="rose"></i> 1. Romantik Mod (Akıllı Ambiyans Senaryosu)</h3>
+                            <span class="card-badge" style="background: rgba(244, 63, 94, 0.15); color: var(--rose); border-color: rgba(244, 63, 94, 0.3);">Yakında Eklenecek</span>
+                        </div>
+                        <div class="innovation-body">
+                            <p><strong>Amaç:</strong> Evin sirkadiyen ışıklarını ve müzik altyapısını tek bir komutla huzurlu, dinlendirici ve romantik bir akşam yemeği atmosferine büründürmek.</p>
+                            
+                            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--rose);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="flame" class="amber"></i> Yemek Odası & Mutfak Aydınlatması:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">Tüm beyaz spotlar kapanır, sadece yemek masası ve tezgah üzerinde sıcak kehribar (2200K Mum Işığı) loş ton açılır.</p>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--purple);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="music" class="purple"></i> Arka Plan Romantik Akustik Müzik:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">Hoparlörlerden yumuşak piyano/akustik lo-fi tınıları konuşmayı bölmeyecek düşük desibelde (%25 ses) otomatik başlar.</p>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--cyan);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="footprints" class="cyan"></i> Koridor Loş Işık Rehberi:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">Koridor ışıkları gözü rahatsız etmeyecek %10 zemin rehber aydınlatmasına geçer; diğer odaların ışıkları tamamen söndürülür.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: 112 Acil Sağlık & Otonom Kapı Açma -->
+                    <div class="card innovation-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="ambulance" class="rose"></i> 2. 112 Acil Sağlık & Otonom Kapı Protokolü</h3>
+                            <span class="card-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald); border-color: rgba(16, 185, 129, 0.3);">Hayat Kurtarma Protokolü</span>
+                        </div>
+                        <div class="innovation-body">
+                            <p><strong>Amaç:</strong> Evde kaza, düşme, bayılma veya ani kalp krizi durumunda ambulans ekiplerinin kilitli kapılarda saniyeler kaybetmesini önleyerek hayatta kalma şansını en üst düzeye çıkarmak.</p>
+                            
+                            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--rose);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="activity" class="rose"></i> Kaza ve Düşme Tespiti:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">60GHz FMCW radar veya acil panik sensörü ani düşme veya hareketsizlik algıladığında otonom sağlık protokolü tetiklenir.</p>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--emerald);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="key-round" class="emerald"></i> Otonom Bahçe & Dış/İç Kapıların Açılması:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;"><strong>Sağlık görevlileri kapıda kalmasın diye:</strong> Bahçe kapısı, çelik dış giriş kapısı ve kaza olan odanın kapısı anında motorlu olarak ardına kadar açılır.</p>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border-left: 3px solid var(--amber);">
+                                    <strong style="color: var(--text-main); font-size: 0.88rem;"><i data-lucide="phone-call" class="amber"></i> 112 Acil Çağrı & Konum/Telemetri İletimi:</strong>
+                                    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">112 Acil Sağlık sistemine doğrudan dijital acil durum çağrısı açılarak tam adres, kapıların açık olduğu bilgisi ve düşme anı iletilir.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- WELCOME MODAL OVERLAY -->
+    <div class="welcome-modal-backdrop" id="welcome-modal">
+        <div class="welcome-modal-card">
+            <div class="modal-header">
+                <i data-lucide="home" class="primary"></i>
+                <h2>HOŞ GELDİNİZ!</h2>
+            </div>
+            <p>Akıllı ev ortamınız hazırlandı: Motorlu kapılar kilit serbest bıraktı, sirkadiyen aydınlatma %60 seviyesine getirildi, iklimlendirme 25°C'ye sabitlendi ve dinlendirici müzik başlatıldı.</p>
+            <button class="btn btn-primary margin-top" id="btn-close-modal">Teşekkürler, Devam Et</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
