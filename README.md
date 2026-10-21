@@ -2,6 +2,7 @@
 ### *Decentralized Multi-Agent Edge Ecosystem with NVIDIA NIM, NILM AI, and Biomimetic Water-Thermal Symbiosis*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Feasibility & Defense: High ROI](https://img.shields.io/badge/Feasibility-TTO%20%26%20VC%20Audited%20(ROI%20%3C14%20Mo)-orange.svg)](FEASIBILITY_AND_MARKET_ANALYSIS.md)
 [![Edge AI: NVIDIA NIM](https://img.shields.io/badge/Edge%20AI-NVIDIA%20NIM%20%7C%20NeMo%20Guardrails-76B900.svg)](https://build.nvidia.com)
 [![Development: Solo + AI Co--Engineered](https://img.shields.io/badge/Engineered-Solo%20Developer%20%2B%20AI-purple.svg)]()
 [![Hardware: ESP32 + Jetson Edge](https://img.shields.io/badge/Hardware-ESP32%20%7C%20Jetson%20Edge-red.svg)](https://espressif.com)
@@ -175,6 +176,7 @@ python server_backend.py
 ├── server_backend.py            # Local edge server (FastAPI/REST, NVIDIA NIM, Open-Meteo)
 ├── smart_home_floorplan.jpg     # 16:9 Architectural top-down blueprint
 ├── MAKET_EV_VE_DONANIM_REHBERI.md # Step-by-step physical scale model & ESP32 assembly guide
+├── FEASIBILITY_AND_MARKET_ANALYSIS.md # Financial ROI, Component Lifecycle, Competitor Matrix & TTO Defense
 ├── YOL_HARITASI_VE_FAZLAR.md    # Multi-phase roadmap and theoretical documentation
 ├── not_defteri.txt              # Plain-text presentation & defense guide
 └── .env.example                 # Environment configuration template

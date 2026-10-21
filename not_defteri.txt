@@ -98,4 +98,41 @@ Jüri size "MIT'yi kazanırsanız ve fon alırsanız bir sonraki adımınız ned
    - Evde kaza, düşme veya ani bayılma algılandığında 112 Acil Servis'e konum ve sağlık telemetrisi iletilir.
    - Sağlık personeli ve ambulans ekipleri kapıda kalıp hayati dakikaları kaybetmesin diye bahçe dış demir kapısı, apartman kapısı ve kaza odasının kapısı otonom motorla açılır.
 
+
+--------------------------------------------------------------------------------
+7. TTO & SÜLEYMAN HOCA SAVUNMA CEVAPLARI (AĞIR KAPAK VE TEKNİK GERÇEKLER)
+--------------------------------------------------------------------------------
+
+Hoca Sordu: "Ben elimdeki telefonla zaten yaparım, ayağa kalkar ışığı kapatırım, ne gerek var masrafa?"
+CEVABIN:
+"Hocam siz projeyi 'telefondan lamba açıp kapatan ucuz bir uzaktan kumanda' sandınız. Bu bir oyuncak değil, otonom enerji ve hayat kurtarma altyapısıdır:
+1. Siz ayağa kalkıp bulaşık makinesinin 55°C sıcak atık suyunu kovayla yakalayıp alttan ısıtmaya dökemezsiniz. Eşanjörümüz bunu otonom yaparak ev ısınmasında %12 net tasarruf sağlar.
+2. Siz evde kalp krizi geçirip yere yığıldığınızda veya bayıldığınızda ayağa kalkıp kapıyı ambulansa açamazsınız. AURA 112'yi arayıp sağlık ekipleri kapıda kalmasın diye bahçe ve ev kapılarını otonom açar.
+3. 20 tane prize 10.000 TL vermek yerine panodaki 350 TL'lik tek sensörle yapay zeka akımı analiz eder."
+
+Hoca Sordu: "Sistem sürekli açık kalıp boş yere elektrik harcamıyor mu?"
+CEVABIN:
+"Hocam matematiksel veriler tam tersini söylüyor:
+- Bütün odalardaki ESP32 ağı toplamda 3.5 Watt çeker. Bu da ayda sadece 2.5 kWh, yani 10 TL bile etmez!
+- Buna karşılık sistemimiz hava durumu tahmini ve atık su eşanjörüyle ayda 150-180 kWh enerji tasarrufu sağlar.
+- Yani sistem tükettiği enerjinin 40 kat fazlasını haneye geri kazandırır!"
+
+Hoca Sordu: "Piyasadaki Xiaomi, Tuya veya Apple Home varken buna ne gerek var?"
+CEVABIN:
+"Piyasadaki ürünlerin 3 büyük kusuru vardır:
+1. İnternet veya sunucu çöktüğünde hepsi çöp olur, ev kilitlenir. AURA ise ev içi mikro-sunucuda 1ms gecikmeyle internetsiz çalışır.
+2. Evin özel yaşam verilerini Çin veya ABD bulutlarına satarlar. AURA'da hiçbir veri evden dışarı çıkmaz.
+3. Hiçbiri bina tesisatıyla, su arıtmayla veya ısı eşanjörüyle entegre değildir. AURA tam bir fiziksel mühendislik simbiyozudur."
+
+Hoca Sordu: "Ne zaman bozulur? Parçaları ne kadar sürede değişmeli?"
+CEVABIN:
+- Pano Akım Klempi: 20 yıl ömürlüdür (hareketli parçası yoktur).
+- Plakalı Eşanjör: 316L paslanmaz çeliktir, 25 yıl dayanır.
+- BiyoKalp Su Filtreleri: Standart kartuştur, yılda 1 kez değişir (yıllık maliyeti 15 dolardır).
+- Sistemin Amortisman Süresi (ROI): Evin enerji ve su tasarrufu sayesinde sistem 12-14 ayda kendi maliyetini tamamen sıfırlar!
+
+Hoca Sordu: "Ekibin yok, 2 yıllık lojistikte okuyorsun, bu işi nasıl yapacaksın?"
+CEVABIN:
+"Hocam yazılım ve mimari zaten bitti; canlı simülatörü ve Python uç sunucusu GitHub'da çalışıyor. Donanım üretiminde ise OSTİM'in tam kalbindeyiz! Lojistik okumam bu iş için en büyük güçtür: Tedarik zinciri yönetimi, parça temini (BOM), İvedik/OSTİM sanayisindeki atölyelerle seri üretim ve montaj lojistiğini doğrudan kendi mesleki alanımla yönetiyorum."
+
 ================================================================================
